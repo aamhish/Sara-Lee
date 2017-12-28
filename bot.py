@@ -20,7 +20,7 @@ async def on_message(message):
     if(message.content.find("blowtorch")!=-1):
         print('success')
         await client.send_message(message.channel, 'Blowtorches are good <3')
-     await bot.process_commands(message)
+     await client.process_commands(message)
     
 
 # This is a basic example of a call and response command. You tell it do "this" and it does it.
