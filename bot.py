@@ -35,7 +35,7 @@ async def sleep(lolidk):
    
 # After you have modified the code, feel free to delete the line above (line 33) so it does not keep popping up everytime you initiate the ping commmand.
     
-client.run('process.env.BOT_TOKEN')
+client.run(os.environ.get('BOT_TOKEN', None))
 
 # Basic Bot was created by Habchy#1665
 # Please join this Discord server if you need help: https://discord.gg/FNNNgqb
