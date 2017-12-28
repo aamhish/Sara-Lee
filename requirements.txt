@@ -20,6 +20,5 @@ ruamel.ordereddict==0.4.13
 ruamel.yaml==0.15.35
 shutilwhich==1.1.0
 urllib3==1.22
-vboxapi==1.0
 virtualenv==15.1.0
 virtualenv-clone==0.2.6
