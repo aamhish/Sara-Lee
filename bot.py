@@ -146,5 +146,15 @@ async def stopgame ():
     player2 = 0;
     player2score = 0;
     current_player = 0;
+@client.command()
+async def endgame():
+    game_on= False;
+    game_on = False;
+    player1 = 0;
+    player1score = 0;
+    player2 = 0;
+    player2score = 0;
+    current_player = 0;
 client.run(os.environ.get('BOT_TOKEN', None))
+
 
