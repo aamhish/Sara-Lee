@@ -43,7 +43,7 @@ async def on_member_remove(member):
 @client.command()
 async def teamname(lolidk):
     lol = tba.team("frc"+lolidk)
-    await client.say("Team "+lolidk+"is called: "+lol['nickname']);
+    await client.say("Team "+str(lolidk)+" is called: "+lol['nickname']);
 
 
 
