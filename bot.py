@@ -3,6 +3,7 @@ import asyncio
 import json
 import logging
 import traceback
+import tbapy
 import os
 from discord.ext.commands import Bot
 from discord.ext import commands
