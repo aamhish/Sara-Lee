@@ -8,7 +8,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from random import randint
 import platform
-
+tba = tbapy.TBA(os.environ.get('TBA',None);
 client = Bot(description="lolidk", command_prefix="-", pm_help = True)
 game_on = False;
 player1 = 0;
@@ -38,6 +38,12 @@ async def on_member_join(member):
     await client.send_message("welcome", 'Welcome '+member.name+' to '+client.get_server.name+'!!')
 async def on_member_remove(member):
     await client.send_message("welcome", 'Bye '+member.name+ ':(')
+
+@client.command()
+async def teamname(lolidk):
+    lol = tba.team("frc"+lolidk)
+    await client.say("Team "+lolidk+"is called: "+lol['nickname']);
+
 
 
 @client.command()
