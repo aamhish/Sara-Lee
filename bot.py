@@ -8,7 +8,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from random import randint
 import platform
-tba = tbapy.TBA(os.environ.get('TBA',None);
+tba = tbapy.TBA(os.environ.get('TBA',None));
 client = Bot(description="lolidk", command_prefix="-", pm_help = True)
 game_on = False;
 player1 = 0;
