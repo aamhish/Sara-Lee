@@ -35,9 +35,9 @@ async def on_message(message):
     await client.process_commands(message)
 @client.async_event
 async def on_member_join(member):
-    await client.send_message("Welcome", 'Welcome '+member.name+' to '+client.get_server.name+'!!')
+    await client.send_message("welcome", 'Welcome '+member.name+' to '+client.get_server.name+'!!')
 async def on_member_remove(member):
-    await client.send_message("Welcome", 'Bye '+member.name+ ':(')
+    await client.send_message("welcome", 'Bye '+member.name+ ':(')
 
 
 @client.command()
@@ -53,6 +53,7 @@ async def sleep(lolidk):
 @client.command(pass_context=True)
 async def startblackjack(ctx):
     global game_on;global player1; global player1score; global player2; global player2score; global current_player; 
+    player1score = 0;
    # player2=player2_
     await client.say("Welcome to Good Ol' Blackjack. <@" +str(ctx.message.author.id)+">. Today you will be playing with <@"+str(ctx.message.mentions[0].id)+">.");
     game_on = True;
@@ -139,6 +140,7 @@ async def stand (ctx):
         stopgame();
 
 async def stopgame ():
+    global game_on;global player1; global player1score; global player2; global player2score; global current_player;
     game_on= False;
     game_on = False;
     player1 = 0;
@@ -148,6 +150,7 @@ async def stopgame ():
     current_player = 0;
 @client.command()
 async def endgame():
+    global game_on;global player1; global player1score; global player2; global player2score; global current_player;
     game_on= False;
     game_on = False;
     player1 = 0;
