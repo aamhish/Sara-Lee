@@ -58,10 +58,10 @@ async def sleep(lolidk):
     await client.say(lolidk+" go to sleep before Hayley comes and finds you!!!")
     await asyncio.sleep(3)
 @client.command(pass_context=True)
-async def sleep(ctx):
+async def gotosleep(ctx):
    # await client.say(lolidk);
     player2=ctx.message.mentions[0];
-    await client.send_message(player2, "<@"+player2.id+">"+go to sleep before Hayley comes and finds you!!!")
+    await client.send_message(player2, "<@"+player2.id+">"+"go to sleep before Hayley comes and finds you!!!")
     await asyncio.sleep(3)
 @client.command(pass_context=True)
 async def startblackjack(ctx):
