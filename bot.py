@@ -44,7 +44,9 @@ async def on_member_remove(member):
 async def teamname(lolidk):
     lol = tba.team("frc"+lolidk)
     await client.say("Team "+str(lolidk)+" is called: "+lol['nickname']);
-
+@client.command()
+async def 14(lolidk):
+     await client.say("03!");
 
 
 @client.command()
@@ -62,6 +64,12 @@ async def gotosleep(ctx):
    # await client.say(lolidk);
     player2=ctx.message.mentions[0];
     await client.send_message(player2, "<@"+player2.id+">"+"go to sleep before Hayley comes and finds you!!!")
+    await asyncio.sleep(3)
+@client.command(pass_context=True)
+async def go2sleep(ctx):
+   # await client.say(lolidk);
+    player2=ctx.message.mentions[0];
+    await client.send_message(player2, "<@"+player2.id+">"+"go to sleep!!!")
     await asyncio.sleep(3)
 @client.command(pass_context=True)
 async def startblackjack(ctx):
