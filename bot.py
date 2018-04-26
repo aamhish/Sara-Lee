@@ -34,6 +34,7 @@ async def on_message(message):
         print('success')
         await client.send_message(message.channel, 'OI')
     elif(message.author.id==338163785082601473):
+        print('Hayl send a message yay')
         await client.change_nickname(338163785082601473, "Too AUSome")
     await client.process_commands(message)
 @client.async_event
