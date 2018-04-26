@@ -33,6 +33,8 @@ async def on_message(message):
     elif(message.content.find("*Aussie*")!=-1):
         print('success')
         await client.send_message(message.channel, 'OI')
+    elif(message.author.id==338163785082601473)
+        await client.change_nickname(338163785082601473, "Bestest Person Ever. Should come back to USA")
     await client.process_commands(message)
 @client.async_event
 async def on_member_join(member):
