@@ -47,7 +47,7 @@ async def teamname(lolidk):
     lol = tba.team("frc"+lolidk)
     await client.say("Team "+str(lolidk)+" is called: "+lol['nickname']);
 @client.command()
-async def 14(lolidk):
+async def fourteen(lolidk):
      await client.say("03!");
 
 
