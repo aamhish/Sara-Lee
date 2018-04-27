@@ -33,11 +33,12 @@ async def on_message(message):
     elif(message.content.find("*Aussie*")!=-1):
         print('success')
         await client.send_message(message.channel, 'OI')
-    elif(message.author.id==338163785082601473):
+    elif(message.author.id=='338163785082601473'):
         print('Hayl send a message yay')
         await client.change_nickname(338163785082601473, "Too AUSome")
-    elif(message.author.id==361549038958673924):
+    elif(message.author.id=='361549038958673924'):
         print('me send a message yay')
+        print(message.author.id)
         await client.change_nickname(361549038958673924, "Too AUSome")
     await client.process_commands(message)
 @client.async_event
