@@ -28,18 +28,21 @@ async def on_message(message):
         print('success')
         await client.send_message(message.channel, 'Blowtorches are good <3')
     elif(message.content.find("*Aussie Aussie Aussie*")!=-1):
-        print('success')
-        await client.send_message(message.channel, 'OI OI OI')
+	    print('success')
+	    await client.send_message(message.channel,'OI OI OI')
     elif(message.content.find("*Aussie*")!=-1):
-        print('success')
-        await client.send_message(message.channel, 'OI')
+	    print('success')
+	    await client.send_message(message.channel,'OI');
+    elif(message.content.find("Sara Lee")!=-1):
+        print('Cakes taste better when expired')
+        await client.send_message(message.channel,'Cakes taste better when expired');# await client.send_message(message.channel, 'OI')
     elif(message.author.id=='338163785082601473'):
         print('Hayl send a message yay')
         await client.change_nickname(message.author, "Too AUSome")
-    elif(message.author.id=='361549038958673924'):
-        print('me send a message yay')
-        print(message.author.id)
-        await client.change_nickname(message.author, "Too AUSome")
+   # elif(message.author.id=='361549038958673924'):
+    #    print('me send a message yay')
+     #   print(message.author.id)
+     #   await client.change_nickname(message.author, "Too AUSome")  
     await client.process_commands(message)
 @client.async_event
 async def on_member_join(member):
@@ -60,6 +63,7 @@ async def fourteen(lolidk):
 async def ping(*args):
 
     await client.say(":ping_pong: Pong!")
+    print ("lolidk") 
     await asyncio.sleep(3)
 @client.command()
 async def sleep(lolidk):
@@ -186,6 +190,9 @@ async def endgame():
     player2 = 0;
     player2score = 0;
     current_player = 0;
+
+
+
 client.run(os.environ.get('BOT_TOKEN', None))
 
 
