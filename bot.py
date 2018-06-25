@@ -8,7 +8,10 @@ import os
 from discord.ext.commands import Bot
 from discord.ext import commands
 from random import randint
+import datetime
 import platform
+from datetime import datetime
+from pytz import timezone
 tba = tbapy.TBA(os.environ.get('TBA',None));
 client = Bot(description="lolidk", command_prefix="-", pm_help = True)
 game_on = False;
@@ -17,13 +20,16 @@ player1score = 0;
 player2 = 0;
 player2score = 0;
 current_player = 0;
-
+lol = {};
+sleeplolidk = {};
+wakeuplolidk = {};
 @client.event
 async def on_ready():
     print('Logged in as '+client.user.name+' (ID:'+client.user.id+') | Connected to '+str(len(client.servers))+' servers | Connected to '+str(len(set(client.get_all_members())))+' users')
     print('--------')
 @client.event
 async def on_message(message):
+    tz = timezone('EST')
     if(message.content.find("blowtorch")!=-1):
         print('success')
         await client.send_message(message.channel, 'Blowtorches are good <3')
@@ -36,9 +42,17 @@ async def on_message(message):
     elif(message.content.find("Sara Lee")!=-1):
         print('Cakes taste better when expired')
         await client.send_message(message.channel,'Cakes taste better when expired');# await client.send_message(message.channel, 'OI')
-    elif(message.author.id=='338163785082601473'):
-        print('Hayl send a message yay')
-        await client.change_nickname(message.author, "Too AUSome")
+    elif(message.author.id in lol):
+        await client.change_nickname(message.author, lol[message.author.id])
+        await client.say("Nickname was locked. Try eating some cakes in order to ublock it!")
+    elif(message.author.id in sleeplolidk):
+        lol1234= int(datetime.now(tz).hour)
+        print (lol1234)
+        print (int(sleeplolidk[message.author.id]))
+        print (int(wakeuplolidk[message.author.id]))
+        if(lol1234<int(sleeplolidk[message.author.id]) and lol1234>int(wakeuplolidk[message.author.id])):
+             await client.send_message(message.channel,"GO TO SLEEP SMH!!!!!");
+
    # elif(message.author.id=='361549038958673924'):
     #    print('me send a message yay')
      #   print(message.author.id)
@@ -49,7 +63,12 @@ async def on_member_join(member):
     await client.send_message("welcome", 'Welcome '+member.name+' to '+client.get_server.name+'!!')
 async def on_member_remove(member):
     await client.send_message("welcome", 'Bye '+member.name+ ':(')
-
+@client.command(pass_context=True)
+async def set_sleeping_time(lolidk,lol,wakeup,night):
+    global sleeplolidk
+    sleeplolidk[lolidk.message.mentions[0].id]=night
+    wakeuplolidk[lolidk.message.mentions[0].id]=wakeup
+    await client.say("<@"+lolidk.message.mentions[0].id+">'s bed time has been set :smile: They will be yelled at from "+ wakeuplolidk[lolidk.message.mentions[0].id]+" to "+ sleeplolidk[lolidk.message.mentions[0].id])
 @client.command()
 async def teamname(lolidk):
     lol = tba.team("frc"+lolidk)
@@ -65,6 +84,17 @@ async def ping(*args):
     await client.say(":ping_pong: Pong!")
     print ("lolidk") 
     await asyncio.sleep(3)
+@client.command(pass_context=True)
+async def locknickname(lolidk, arg1):
+    global lol;
+
+    await client.say("<@"+lolidk.message.mentions[0].id+">'s nick will be locked to "+arg1);
+    #lolidk.message.content-=lolidk.message.mentions[0].name
+    #await client.say(arg1);
+   # print ("lolidk") 
+    await asyncio.sleep(3)
+    lol[lolidk.message.mentions[0].id]=arg1;
+    print (lol)
 @client.command()
 async def sleep(lolidk):
    # await client.say(lolidk);
@@ -190,7 +220,6 @@ async def endgame():
     player2 = 0;
     player2score = 0;
     current_player = 0;
-
 
 
 client.run(os.environ.get('BOT_TOKEN', None))
