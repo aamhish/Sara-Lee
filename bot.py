@@ -221,6 +221,70 @@ async def endgame():
     player2score = 0;
     current_player = 0;
 
+@client.command()
+async def ngstart(lolidk):
+    global ngplayer,ngdistrict,ngbool,teamnamelol
+   # tba = tbapy.TBA("3XTVgiktBgeZCnHu0qI7IGfnN6hEX0AkCDdQF69mAR57HNvmPkqkqjJvnykitQOK")
+    ngbool=True
+    ngdistrict=lolidk
+    temp=randint(3,7000)
+    print (temp)
+    if(ngdistrict=="lolidk"):
+
+        tempp=tba.team("frc"+str(temp))
+        await client.say("What is the name of team "+str(temp))
+        print("frc"+str(temp))
+        teamnamelol=tempp['nickname']
+
+        
+    else:
+        listo = tba.district_teams("2018"+lolidk,0,1)
+        end = len(listo)
+        teamnumindex = randint(1,end-1)
+        numbo=listo[teamnumindex]
+        await client.say("What is the name of team "+str(numbo))
+        teamnamelol = tba.team(numbo)['nickname']
+
+        '''
+        abc = True
+        while(abc):
+            tempp=tba.team("frc"+str(temp))
+            teamnamez = teamnamelol
+            #print (tba.team_districts(temp)[0].display_name)
+            #print(len(tba.team_districts(temp))
+            z = len(tba.team_districts(temp))
+            print (z)
+            print (temp)
+            if(not(z==0)):
+                print (1)
+                if(tba.team_districts(temp)[0].display_name==ngdistrict):
+                    print("frc"+str(temp))
+                    await client.say("What is the name of team "+str(temp))
+                    teamnamez=tempp['nickname']
+                    abc=False
+                    
+                    #await client.say("What is the name of team "+str(temp))
+
+                else:
+                    print("lolidk :/")
+                    temp=randint(3,7000)
+            else:
+                print("lolidk :/")
+                temp=randint(3,7000)
+            '''
+
+
+@client.command()
+async def ngpick(lolidk):
+    global ngplayer,ngdistrict,ngbool,teamnamelol
+    await client.say(str(teamnamelol))
+    if(ngbool):
+        if(lolidk==teamnamelol):
+            await client.say("GOOD JOB MATEY")
+        else:
+            await client.say(":( the real name is "+teamnamelol)
+    ngbool = False
+
 
 client.run(os.environ.get('BOT_TOKEN', None))
 
