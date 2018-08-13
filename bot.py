@@ -222,11 +222,12 @@ async def endgame():
     player2score = 0;
     current_player = 0;
 
-@client.command()
-async def ngstart(lolidk):
+@client.command(pass_context=True)
+async def ngstart(ctx, lolidk):
     global ngplayer,ngdistrict,ngbool,teamnamelol
    # tba = tbapy.TBA("3XTVgiktBgeZCnHu0qI7IGfnN6hEX0AkCDdQF69mAR57HNvmPkqkqjJvnykitQOK")
     ngbool=True
+    print(lolidk)
     ngdistrict=lolidk
     temp=randint(3,7000)
     print (temp)
@@ -234,16 +235,22 @@ async def ngstart(lolidk):
 
         tempp=tba.team("frc"+str(temp))
         await client.say("What is the name of team "+str(temp))
+       
         print("frc"+str(temp))
         teamnamelol=tempp['nickname']
 
         
     else:
         listo = tba.district_teams("2018"+lolidk,0,1)
+        print("2018"+lolidk)
         end = len(listo)
         teamnumindex = randint(1,end-1)
         numbo=listo[teamnumindex]
-        await client.say("What is the name of team "+str(numbo))
+        #await client.say("What is the name of team "+str(numbo))
+        embed0=discord.Embed(title="Single-Player Name Quiz Game", description="A fun little game", color=0x00ff00)
+        embed0.add_field(name="Team number", value=str(numbo), inline=False)
+        embed0.add_field(name="Team Name", value = "???", inline=False)
+        await client.send_message(ctx.message.channel, embed=embed0)
         teamnamelol = tba.team(numbo)['nickname']
 
         '''
@@ -275,60 +282,116 @@ async def ngstart(lolidk):
             '''
 
 
-@client.command()
-async def ngpick(lolidk):
-    global ngplayer,ngdistrict,ngbool,teamnamelol
-    await client.say(str(teamnamelol))
+@client.command(pass_context=True)
+async def ngpick(ctx, lolidk):
+    global ngplayer,ngdistrict,ngbool,teamnamelol,numbo
+    #await client.say(str(teamnamelol))
     if(ngbool):
-        if(lolidk==teamnamelol):
-            await client.say("GOOD JOB MATEY")
+        ratio = fuzz.partial_ratio(teamnamelol.lower(), lolidk.lower())
+        if(ratio>80):
+           # await client.say("GOOD JOB MATEY. The team name was "+teamnamelol+" and you were about "+str(ratio)+"% accurate.")
+            embed0=discord.Embed(title="Single-Player Name Quiz Game", description="A fun little game", color=0x00ff00)
+            embed0.add_field(name="Team number", value=str(numbo), inline=False)
+            embed0.add_field(name="Team Name", value = teamnamelol, inline=False)
+            embed0.add_field(name="What You Entered", value=lolidk, inline=False)
+            embed0.add_field(name="Ratio", value = str(ratio), inline=False)
+            embed0.add_field(name="Correct?", value= "Hell Yea", inline=False)
+            await client.send_message(ctx.message.channel, embed=embed0)
         else:
-            await client.say(":( the real name is "+teamnamelol)
+            embed0=discord.Embed(title="Single-Player Name Quiz Game", description="A fun little game", color=0x00ff00)
+            embed0.add_field(name="Team number", value=str(numbo), inline=False)
+            embed0.add_field(name="Team Name", value = teamnamelol, inline=False)
+            embed0.add_field(name="What You Entered", value=lolidk, inline=False)
+            embed0.add_field(name="Ratio", value = str(ratio), inline=False)
+            embed0.add_field(name="Correct?", value= "No :(", inline=False)
+            await client.send_message(ctx.message.channel, embed=embed0)
     ngbool = False
+numbolol=0;mpngbool=False; mpngplayer2=0; mpngplayer1=0; mpngselected=0; mpngteamnamelol="";districto=""
 @client.command(pass_context=True)
 async def mpngstart(lolidk, district):
-    global mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto
+    global numbolol,mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto;
     mpngbool=True
     mpngplayer2=lolidk.message.mentions[0].id;
     mpngplayer1=lolidk.message.author.id
     print(district)
-    await client.say("Game is being played between <@"+str(lolidk.message.author.id)+"> and <@"+str(mpngplayer2)+">. The selected district is "+district)
-    await client.say("First up is: <@"+str(mpngplayer1)+">")
+    
+  #  await client.say("Game is being played between <@"+str(lolidk.message.author.id)+"> and <@"+str(mpngplayer2)+">. The selected district is "+district)
+  #  await client.say("First up is: <@"+str(mpngplayer1)+">")
     listo = tba.district_teams("2018"+district,0,1)
     end = len(listo)
     print(end);
     teamnumindex = randint(1,end-1)
-    numbo=listo[teamnumindex]
-    await client.say("What is the name of team "+str(numbo))
-    mpngteamnamelol = tba.team(numbo)['nickname']
+    numbolol=listo[teamnumindex]
+   # await client.say("What is the name of team "+str(numbo))
+    mpngteamnamelol = tba.team(numbolol)['nickname']
     mpngselected=mpngplayer1
     districto = district
+    embed0=discord.Embed(title="MultiPlayer Name Quiz Game", description="A fun little game", color=0x00ff00)
+    embed0.add_field(name="Player 1", value="<@"+mpngplayer1+">", inline=False)
+    embed0.add_field(name="Player 2", value ="<@"+mpngplayer2+">", inline=False)
+    embed0.add_field(name="Active Player", value="<@"+mpngselected+">", inline=False)
+    embed0.add_field(name="Team Number", value = str(numbolol), inline=False)
+    embed0.add_field(name="Team Name", value= "???", inline=False)
+    await client.send_message(lolidk.message.channel, embed=embed0)
 @client.command(pass_context=True)
-async def mpngpick(lolidk):
-    global mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto
+async def mpngpick(ctx,lolidk):
+    global numbolol,mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto
     if(mpngselected==mpngplayer1):
         otherguy=mpngplayer2
     else:
         otherguy=mpngplayer1
-    print (mpngbool)
-    print (lolidk.message.author)
-    if(lolidk.message.author.id==mpngselected and mpngbool):
+    print (lolidk)
+   # print (lolidk.message.author)
+    if(ctx.message.author.id==mpngselected and mpngbool):
         print("hola")
-        ratio = fuzz.partial_ratio(mpngteamnamelol.lower(), lolidk.message.content.lower())
+        ratio = fuzz.partial_ratio(mpngteamnamelol.lower(), lolidk.lower())
         if(ratio>80):
-            await client.say("GOOD JOB MATEY. The team name was "+str(mpngteamnamelol)+" and you were about "+str(ratio)+"% accurate.")
+          #  await client.say("GOOD JOB MATEY. The team name was "+str(mpngteamnamelol)+" and you were about "+str(ratio)+"% accurate.")
             selected=otherguy
+            embed0=discord.Embed(title="MultiPlayer Name Quiz Game", description="A fun little game", color=0x00ff00)
+            embed0.add_field(name="Player 1", value="<@"+mpngplayer1+">", inline=False)
+            embed0.add_field(name="Player 2", value ="<@"+mpngplayer2+">", inline=False)
+            embed0.add_field(name="Active Player", value="<@"+mpngselected+">", inline=False)
+            embed0.add_field(name="Team Number", value = str(numbolol), inline=False)
+            embed0.add_field(name="Team Name", value= mpngteamnamelol, inline=False)
+            embed0.add_field(name="Team Name You Entered", value = lolidk, inline=False)
+            embed0.add_field(name="Ratio", value= ratio, inline=False)
+            embed0.add_field(name="Correct?", value= "Hell Yea!", inline=False)
+            await client.send_message(ctx.message.channel, embed=embed0)
             await client.say("<@"+str(otherguy)+"> is up now!")
             listo = tba.district_teams("2018"+districto,0,1)
             end = len(listo)
             print(end);
             teamnumindex = randint(1,end-1)
-            numbo=listo[teamnumindex]
-            await client.say("What is the name of team "+str(numbo))
-            mpngteamnamelol = tba.team(numbo)['nickname']
+            numbolol=listo[teamnumindex]
+           # await client.say("What is the name of team "+str(numbo))
+            mpngteamnamelol = tba.team(numbolol)['nickname']
+            embed0=discord.Embed(title="MultiPlayer Name Quiz Game", description="A fun little game", color=0x00ff00)
+            embed0.add_field(name="Player 1", value="<@"+mpngplayer1+">", inline=False)
+            embed0.add_field(name="Player 2", value ="<@"+mpngplayer2+">", inline=False)
+            embed0.add_field(name="Active Player", value="<@"+mpngselected+">", inline=False)
+            embed0.add_field(name="Team Number", value = str(numbolol), inline=False)
+            embed0.add_field(name="Team Name", value= "???", inline=False)
+            await client.send_message(ctx.message.channel, embed=embed0)
+
+    
         else:
-            await client.say(":( the real name is "+str(mpngteamnamelol)+" Your accuracy was "+str(ratio)+"%. You need 80% or higher to win man.")
-            await client.say("GAME OVER!!! <@"+str(otherguy)+"> wins!!!!")
+            #await client.say(":( the real name is "+str(mpngteamnamelol)+" Your accuracy was "+str(ratio)+"%. You need 80% or higher to win man.")
+           # await client.say("GAME OVER!!! <@"+str(otherguy)+"> wins!!!!")
+            embed0=discord.Embed(title="MultiPlayer Name Quiz Game", description="A fun little game", color=0x00ff00)
+            embed0.add_field(name="Player 1", value="<@"+mpngplayer1+">", inline=False)
+            embed0.add_field(name="Player 2", value ="<@"+mpngplayer2+">", inline=False)
+            embed0.add_field(name="Active Player", value="<@"+mpngselected+">", inline=False)
+            embed0.add_field(name="Team Number", value = str(numbolol), inline=False)
+            embed0.add_field(name="Team Name", value= mpngteamnamelol, inline=False)
+            embed0.add_field(name="Team Name You Entered", value = lolidk, inline=False)
+            embed0.add_field(name="Ratio", value= ratio, inline=False)
+            embed0.add_field(name="Correct?", value= "No :( <@"+otherguy+"> wins", inline=False)
+            await client.send_message(ctx.message.channel, embed=embed0)
+            mpngbool=False;
+
+
+
 
 
 
