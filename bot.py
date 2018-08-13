@@ -284,6 +284,52 @@ async def ngpick(lolidk):
         else:
             await client.say(":( the real name is "+teamnamelol)
     ngbool = False
+@client.command(pass_context=True)
+async def mpngstart(lolidk, district):
+    global mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto
+    mpngbool=True
+    mpngplayer2=lolidk.message.mentions[0].id;
+    mpngplayer1=lolidk.message.author.id
+    print(district)
+    await client.say("Game is being played between <@"+str(lolidk.message.author.id)+"> and <@"+str(mpngplayer2)+">. The selected district is "+district)
+    await client.say("First up is: <@"+str(mpngplayer1)+">")
+    listo = tba.district_teams("2018"+district,0,1)
+    end = len(listo)
+    print(end);
+    teamnumindex = randint(1,end-1)
+    numbo=listo[teamnumindex]
+    await client.say("What is the name of team "+str(numbo))
+    mpngteamnamelol = tba.team(numbo)['nickname']
+    mpngselected=mpngplayer1
+    districto = district
+@client.command(pass_context=True)
+async def mpngpick(lolidk):
+    global mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto
+    if(mpngselected==mpngplayer1):
+        otherguy=mpngplayer2
+    else:
+        otherguy=mpngplayer1
+    print (mpngbool)
+    print (lolidk.message.author)
+    if(lolidk.message.author.id==mpngselected and mpngbool):
+        print("hola")
+        ratio = fuzz.partial_ratio(mpngteamnamelol.lower(), lolidk.message.content.lower())
+        if(ratio>80):
+            await client.say("GOOD JOB MATEY. The team name was "+str(mpngteamnamelol)+" and you were about "+str(ratio)+"% accurate.")
+            selected=otherguy
+            await client.say("<@"+str(otherguy)+"> is up now!")
+            listo = tba.district_teams("2018"+districto,0,1)
+            end = len(listo)
+            print(end);
+            teamnumindex = randint(1,end-1)
+            numbo=listo[teamnumindex]
+            await client.say("What is the name of team "+str(numbo))
+            mpngteamnamelol = tba.team(numbo)['nickname']
+        else:
+            await client.say(":( the real name is "+str(mpngteamnamelol)+" Your accuracy was "+str(ratio)+"%. You need 80% or higher to win man.")
+            await client.say("GAME OVER!!! <@"+str(otherguy)+"> wins!!!!")
+
+
 
 
 client.run(os.environ.get('BOT_TOKEN', None))
