@@ -348,7 +348,7 @@ async def mpngpick(ctx,lolidk):
         ratio = fuzz.partial_ratio(mpngteamnamelol.lower(), lolidk.lower())
         if(ratio>80):
           #  await client.say("GOOD JOB MATEY. The team name was "+str(mpngteamnamelol)+" and you were about "+str(ratio)+"% accurate.")
-            selected=otherguy
+            mpngselected=otherguy
             embed0=discord.Embed(title="MultiPlayer Name Quiz Game", description="A fun little game", color=0x00ff00)
             embed0.add_field(name="Player 1", value="<@"+mpngplayer1+">", inline=False)
             embed0.add_field(name="Player 2", value ="<@"+mpngplayer2+">", inline=False)
