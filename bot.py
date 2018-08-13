@@ -9,6 +9,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from random import randint
 import datetime
+from fuzzywuzzy import fuzz
 import platform
 from datetime import datetime
 from pytz import timezone
