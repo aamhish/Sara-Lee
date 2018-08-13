@@ -221,7 +221,7 @@ async def endgame():
     player2 = 0;
     player2score = 0;
     current_player = 0;
-
+@client.command(pass_context=True)
 async def ngstart(ctx, lolidk):
     global ngplayer,ngdistrict,ngbool,teamnamelol
    # tba = tbapy.TBA("3XTVgiktBgeZCnHu0qI7IGfnN6hEX0AkCDdQF69mAR57HNvmPkqkqjJvnykitQOK")
