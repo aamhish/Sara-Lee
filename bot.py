@@ -222,7 +222,6 @@ async def endgame():
     player2score = 0;
     current_player = 0;
 
-@client.command(pass_context=True)
 async def ngstart(ctx, lolidk):
     global ngplayer,ngdistrict,ngbool,teamnamelol
    # tba = tbapy.TBA("3XTVgiktBgeZCnHu0qI7IGfnN6hEX0AkCDdQF69mAR57HNvmPkqkqjJvnykitQOK")
@@ -307,6 +306,7 @@ async def ngpick(ctx, lolidk):
             await client.send_message(ctx.message.channel, embed=embed0)
     ngbool = False
 numbolol=0;mpngbool=False; mpngplayer2=0; mpngplayer1=0; mpngselected=0; mpngteamnamelol="";districto=""
+
 @client.command(pass_context=True)
 async def mpngstart(lolidk, district):
     global numbolol,mpngbool,mpngplayer1,mpngplayer2,mpngselected,mpngteamnamelol,districto;
